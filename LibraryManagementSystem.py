@@ -4,23 +4,23 @@
 
 # Library Management system
 
-#Books
+#Books class that contain information about the book
 class Book:
     def __init__(self, title, author, ISBN, genre, read):
-        self.title = title
-        self.author = author
-        self.ISBN = ISBN
-        self.genre = genre
-        self.read = read # Boolean variable. True means read Flase means not read
-#Library
+        self.title = title # Title of the book
+        self.author = author # Author of the book
+        self.ISBN = ISBN # ISBN number of the book
+        self.genre = genre # Genre of the book
+        self.read = read # Boolean variable. True means read False means not read
+#Library class that contains all books and methods to manage the books
 class Library:
-    def __init__(self):
+    def __init__(self): # default constructors to initialize the books list
         self.books = []
     
-    def get_number_of_books(self):
+    def get_number_of_books(self): # return the number of books in the library
         return len(self.books)
 
-    def search_book_by_title(self, title):
+    def search_book_by_title(self, title): # seacrches all the books by the title provided by the user
         books = []
         if self.get_number_of_books() == 0:
             return False
@@ -29,7 +29,7 @@ class Library:
                 books.append(book)
         return books if books else False
     
-    def search_book_by_author(self, author):
+    def search_book_by_author(self, author): # seacrches all the books by the author provided by the user
         books = []
         if self.get_number_of_books() == 0:
             return False
@@ -38,7 +38,7 @@ class Library:
                 books.append(book)
         return books if books else False
 
-    def search_book_by_genre(self, genre):
+    def search_book_by_genre(self, genre): # seacrches all the books by the genre provided by the user
         books = []
         if self.get_number_of_books() == 0:
             return False
@@ -46,8 +46,8 @@ class Library:
             if genre.lower() in book.genre.lower():
                 books.append(book)
         return books if books else False
-    
-    def search_book_by_ISBN(self, ISBN):
+
+    def search_book_by_ISBN(self, ISBN): # seacrches the book by the ISBN provided by the user
         if self.get_number_of_books() == 0:
             return False
         for book in self.books:
@@ -55,7 +55,7 @@ class Library:
                 return book
         return False
 
-    def print_mini_report(self):
+    def print_mini_report(self): # prints a mini report of the library containing number of books, books by genre, read books, unread books, percentage of read books and books
         print("-"*25)
         print("Mini Report")
         print("-"*25)
@@ -86,14 +86,14 @@ class Library:
             print("No books found by genre.")
 
 
-    def add_book(self, title, author, ISBN, genre, read):
+    def add_book(self, title, author, ISBN, genre, read): # adds a book to the library if the book is not already present in the library
         if self.search_book_by_ISBN(ISBN):
             return False
         else:
             self.books.append(Book(title, author, ISBN, genre, read))
             return True
     
-    def delete_book(self, title):
+    def delete_book(self, title): # deletes a book from the library if the book is present in the library by title 
         if self.search_book_by_title(title):
             for book in self.books:
                 if book.title.replace(" ", "").lower() == title.replace(" ", "").lower():
@@ -102,12 +102,12 @@ class Library:
         else:
             return False
             
-    def get_all_books(self):
+    def get_all_books(self): # returns all the books in the library
         if self.get_number_of_books() == 0:
             return False
         return self.books
     
-    def get_all_unread_books(self):
+    def get_all_unread_books(self):# returns all the unread books in the library
         if self.get_number_of_books() == 0:
             return False
         unread_books = []
@@ -118,7 +118,7 @@ class Library:
             return False
         return unread_books
         
-    def get_all_read_books(self):
+    def get_all_read_books(self): # returns all the read books in the library
         if self.get_number_of_books() == 0:
             return False
         read_books = []
@@ -129,7 +129,7 @@ class Library:
             return False
         return read_books
     
-    def change_book_status(self, title):
+    def change_book_status(self, title): # changes the status of the book from read to unread or unread to read
         if self.get_number_of_books() == 0:
             return False
         for book in self.books:
@@ -141,8 +141,8 @@ class Library:
                     book.read = True
                     return True
         return False
-        
-    def count_books_by_genre(self):
+
+    def count_books_by_genre(self): # counts books by genre like Fantasy: 3 and returns a dictionary. This means there are 3 books in the library of genre fantasy
         if self.get_number_of_books() == 0:
             return False
         genre_dictionary = dict()
@@ -157,7 +157,7 @@ class Library:
         return genre_dictionary
     
 if __name__ == "__main__":
-    library = Library()
+    library = Library() # creating an object of the library class
     
     # Adding some template books to the library
     if not library.add_book("Project Hail Mary", "Andy Weir", "9780593135204", "Science Fiction", False):
@@ -199,6 +199,7 @@ if __name__ == "__main__":
     if not library.add_book("Circe", "Madeline Miller", "9780316556347", "Historical Fiction", True):
         print("Book is already in the library")
 
+    # Command line interface for the library management system
     while True:
         print("-"*25)
         print("-"*25)
@@ -206,6 +207,7 @@ if __name__ == "__main__":
         print("-"*25)
         print("-"*25)
         
+        # All options provided by the library management system
         print("1. See number of books in library")
         print("2. Search book by Title")
         print("3. Search book by Author")
@@ -221,14 +223,17 @@ if __name__ == "__main__":
         print("13. Print Mini report")
         print("14. Exit")
         
+        # if a string is entered insted of a number it will ask for input again by skipping the rest of the code
         try:
             input_number = int(input("Enter Here: "))
         except ValueError:
             print("Invalid input enter again")
             continue
+
+        # See number of books in library
         if input_number == 1:
             print("Total number of books are: ", library.get_number_of_books())
-        elif input_number == 2:
+        elif input_number == 2: # Search book by Title
             book_name = input("Enter book name: ")
             if book_name.isdigit():
                 print("Invalid book name")
@@ -241,7 +246,7 @@ if __name__ == "__main__":
             for book in books:
                 print("-"*25)
                 print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
-        elif input_number == 3:
+        elif input_number == 3: # Search book by Author
             author_name = input("Enter author name: ")
             if author_name.isdigit():
                 print("Invalid author name")
@@ -254,7 +259,7 @@ if __name__ == "__main__":
             for book in books:
                 print("-"*25)
                 print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
-        elif input_number == 4:
+        elif input_number == 4: # Search book by Genre
             genre_name = input("Enter genre: ")
             if genre_name.isdigit():
                 print("Invalid genre name")
@@ -267,7 +272,7 @@ if __name__ == "__main__":
             for book in books:
                 print("-"*25)
                 print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
-        elif input_number == 5:
+        elif input_number == 5: # Search book by ISBN
             ISBN_number = input("Enter book ISBN: ")
             if ISBN_number.isdigit() == False:
                 print("Invalid ISBN number")
@@ -278,7 +283,7 @@ if __name__ == "__main__":
                 continue
             print("-"*25)
             print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
-        elif input_number == 6:
+        elif input_number == 6: # Add book to the library
             book_title = input("Enter book title: ")
             book_author = input("Enter book author: ")
             book_ISBN = input("Enter book ISBN: ")
@@ -290,7 +295,7 @@ if __name__ == "__main__":
                 print("Book is already in the library")
             else:
                 print(f"{book_title} added successfully")
-        elif input_number == 7:
+        elif input_number == 7: #  Delete book from the library
             book_name = input("Enter book name to be deleted: ")
             if book_name.isdigit():
                 print("Invalid book name")
@@ -300,7 +305,7 @@ if __name__ == "__main__":
                 print(f"{book} deleted")
             else:
                 print("Book not found in the library")
-        elif input_number == 8:
+        elif input_number == 8: # See all books in the library
             books = library.get_all_books()
             if not books:
                 print("Library is empty")
@@ -309,7 +314,7 @@ if __name__ == "__main__":
                 for book in books:
                     print("-"*25)
                     print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
-        elif input_number == 9:
+        elif input_number == 9: # See all unread books in the library
             unread_books = library.get_all_unread_books()
             if not unread_books:
                 print("Library is either empty or there are no unread books")
@@ -317,7 +322,7 @@ if __name__ == "__main__":
                 print(f"Total unread books {len(unread_books)}")
                 for book in unread_books:
                     print(f"Book Name: {book.title}")
-        elif input_number == 10:
+        elif input_number == 10: # See all read books in the library
             read_books = library.get_all_read_books()
             if not read_books:
                 print("Library is either empty or there are no read books")
@@ -325,7 +330,7 @@ if __name__ == "__main__":
                 print(f"Total read books {len(read_books)}")
                 for book in read_books:
                     print(f"Book Name: {book.title}")
-        elif input_number == 11:
+        elif input_number == 11: # Change book status from read to unread or unread to read
             book_name = input("Enter book name: ")
             if book_name.isdigit():
                 print("Invalid book name")
@@ -335,16 +340,17 @@ if __name__ == "__main__":
                 print("Book status change")
             else:
                 print("Book not found")
-        elif input_number == 12:
+        elif input_number == 12: # Count books by genre
             genre_dictionary = library.count_books_by_genre()
             if genre_dictionary:
                 for genre, count in genre_dictionary.items():
                     print(f"{count} books on {genre}")
             else:
                 print("Library is empty")
-        elif input_number == 13:
+        elif input_number == 13: # Print Mini report
             library.print_mini_report()
-        elif input_number == 14:
+        elif input_number == 14: # Exit from the library management system
+            print("Exiting...")
             break
         else:
             print("-"*25)
