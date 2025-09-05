@@ -46,6 +46,14 @@ class Library:
             if genre.lower() in book.genre.lower():
                 books.append(book)
         return books if books else False
+    
+    def search_book_by_ISBN(self, ISBN):
+        if self.get_number_of_books() == 0:
+            return False
+        for book in self.books:
+            if book.ISBN == ISBN:
+                return book
+        return False
 
     def print_mini_report(self):
         print("-"*25)
@@ -194,15 +202,16 @@ if __name__ == "__main__":
         print("2. Search book by Title")
         print("3. Search book by Author")
         print("4. Search book by Genre")
-        print("5. Add book")
-        print("6. Delete book")
-        print("7. See all books in the library")
-        print("8. See all unread books in the library")
-        print("9. See all read books in the library")
-        print("10. Change book status")
-        print("11. Count books by genre")
-        print("12. Print Mini report")
-        print("13. Exit")
+        print("5. Search book by ISBN")
+        print("6. Add book")
+        print("7. Delete book")
+        print("8. See all books in the library")
+        print("9. See all unread books in the library")
+        print("10. See all read books in the library")
+        print("11. Change book status")
+        print("12. Count books by genre")
+        print("13. Print Mini report")
+        print("14. Exit")
         
         try:
             input_number = int(input("Enter Here: "))
@@ -251,6 +260,17 @@ if __name__ == "__main__":
                 print("-"*25)
                 print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
         elif input_number == 5:
+            ISBN_number = input("Enter book ISBN: ")
+            if ISBN_number.isdigit() == False:
+                print("Invalid ISBN number")
+                continue
+            book = library.search_book_by_ISBN(ISBN_number)
+            if book == False:
+                print("Book not found in the library")
+                continue
+            print("-"*25)
+            print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
+        elif input_number == 6:
             book_title = input("Enter book title: ")
             book_author = input("Enter book author: ")
             book_ISBN = input("Enter book ISBN: ")
@@ -262,7 +282,7 @@ if __name__ == "__main__":
                 print("Book is already in the library")
             else:
                 print(f"{book_title} added successfully")
-        elif input_number == 6:
+        elif input_number == 7:
             book_name = input("Enter book name to be deleted: ")
             if book_name.isdigit():
                 print("Invalid book name")
@@ -272,7 +292,7 @@ if __name__ == "__main__":
                 print(f"{book} deleted")
             else:
                 print("Book not found in the library")
-        elif input_number == 7:
+        elif input_number == 8:
             books = library.get_all_books()
             if not books:
                 print("Library is empty")
@@ -281,7 +301,7 @@ if __name__ == "__main__":
                 for book in books:
                     print("-"*25)
                     print(f"Book Name: {book.title}\nBook Author: {book.author}\nBook ISBN: {book.ISBN}\nBook Genre: {book.genre}\nBook read: {book.read}")
-        elif input_number == 8:
+        elif input_number == 9:
             unread_books = library.get_all_unread_books()
             if not unread_books:
                 print("Library is either empty or there are no unread books")
@@ -289,7 +309,7 @@ if __name__ == "__main__":
                 print(f"Total unread books {len(unread_books)}")
                 for book in unread_books:
                     print(f"Book Name: {book.title}")
-        elif input_number == 9:
+        elif input_number == 10:
             read_books = library.get_all_read_books()
             if not read_books:
                 print("Library is either empty or there are no read books")
@@ -297,7 +317,7 @@ if __name__ == "__main__":
                 print(f"Total read books {len(read_books)}")
                 for book in read_books:
                     print(f"Book Name: {book.title}")
-        elif input_number == 10:
+        elif input_number == 11:
             book_name = input("Enter book name: ")
             if book_name.isdigit():
                 print("Invalid book name")
@@ -307,16 +327,16 @@ if __name__ == "__main__":
                 print("Book status change")
             else:
                 print("Book not found")
-        elif input_number == 11:
+        elif input_number == 12:
             genre_dictionary = library.count_books_by_genre()
             if genre_dictionary:
                 for genre, count in genre_dictionary.items():
                     print(f"{count} books on {genre}")
             else:
                 print("Library is empty")
-        elif input_number == 12:
-            library.print_mini_report()
         elif input_number == 13:
+            library.print_mini_report()
+        elif input_number == 14:
             break
         else:
             print("-"*25)
