@@ -47,6 +47,28 @@ class Library:
                 books.append(book)
         return books if books else False
 
+    def print_mini_report(self):
+        print("-"*25)
+        print("Mini Report")
+        print("-"*25)
+        print(f"Total number of books: {self.get_number_of_books()}")
+        total_books = self.get_number_of_books()
+        if total_books == 0:
+            print("Total read books: 0")
+            print("Total unread books: 0")
+            return
+        read_books = self.get_all_read_books()
+        unread_books = self.get_all_unread_books()
+        if read_books:
+            print(f"Total read books: {len(read_books)}")
+        else:
+            print("Total read books: 0")
+        if unread_books:
+            print(f"Total unread books: {len(unread_books)}")
+        else:
+            print("Total unread books: 0")
+        percent_read = (len(read_books) / total_books) * 100
+        print(f"Percentage of books read: {int(percent_read)}%")
 
     def add_book(self, title, author, ISBN, genre, read):
         if self.search_book_by_title(title):
@@ -179,7 +201,8 @@ if __name__ == "__main__":
         print("9. See all read books in the library")
         print("10. Change book status")
         print("11. Count books by genre")
-        print("12. Exit")
+        print("12. Print Mini report")
+        print("13. Exit")
         
         try:
             input_number = int(input("Enter Here: "))
@@ -292,6 +315,8 @@ if __name__ == "__main__":
             else:
                 print("Library is empty")
         elif input_number == 12:
+            library.print_mini_report()
+        elif input_number == 13:
             break
         else:
             print("-"*25)
