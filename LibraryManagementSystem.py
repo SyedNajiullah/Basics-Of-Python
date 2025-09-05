@@ -87,7 +87,7 @@ class Library:
 
 
     def add_book(self, title, author, ISBN, genre, read):
-        if self.search_book_by_title(title):
+        if self.search_book_by_ISBN(ISBN):
             return False
         else:
             self.books.append(Book(title, author, ISBN, genre, read))
