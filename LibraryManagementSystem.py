@@ -77,6 +77,14 @@ class Library:
             print("Total unread books: 0")
         percent_read = (len(read_books) / total_books) * 100
         print(f"Percentage of books read: {int(percent_read)}%")
+        books_by_genre = self.count_books_by_genre()
+        if books_by_genre:
+            print("Books by genre:")
+            for genre, count in books_by_genre.items():
+                print(f"{genre}: {count}")
+        else:
+            print("No books found by genre.")
+
 
     def add_book(self, title, author, ISBN, genre, read):
         if self.search_book_by_title(title):
